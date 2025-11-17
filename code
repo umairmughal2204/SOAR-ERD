@@ -1,0 +1,189 @@
+Detect and Response Rules:
+events:
+  - NEW_PROCESS
+  - EXISTING_PROCESS
+op: and
+rules:
+  - op: is windows
+  - op: or
+    rules:
+      - case sensitive: false
+        op: ends with
+        path: event/FILE_PATH
+        value: LaZagne.exe
+      - case sensitive: false
+        op: contains
+        path: event/COMMAND_LINE
+        value: LaZagne
+      - case sensitive: false
+        op: is
+        path: event/HASH
+        value: dc06d62ee95062e714f2566c95b8edaabfd387023b1bf98a09078b84007d5268
+
+
+- action: report
+  metadata:
+    author: MyDFIR
+    description: TEST - Detects Lazagne Usage
+    falsepositives:
+      - ToTheMoon
+    level: high
+    tags:
+      - attack.credential_access
+  name: MyDFIR - HackTool - Lazagne
+
+
+
+Event sample:
+{
+  "event": {
+    "BASE_ADDRESS": 140701053091840,
+    "COMMAND_LINE": "\"C:\\Users\\MMT\\Downloads\\LaZagne.exe\"",
+    "FILE_IS_SIGNED": 0,
+    "FILE_PATH": "C:\\Users\\MMT\\Downloads\\LaZagne.exe",
+    "HASH": "dc06d62ee95062e714f2566c95b8edaabfd387023b1bf98a09078b84007d5268",
+    "MEMORY_USAGE": 5525504,
+    "PARENT": {
+      "BASE_ADDRESS": 140695674355712,
+      "COMMAND_LINE": "\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" ",
+      "FILE_IS_SIGNED": 1,
+      "FILE_PATH": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "HASH": "3247bcfd60f6dd25f34cb74b5889ab10ef1b3ec72b4d4b3d95b5b25b534560b8",
+      "MEMORY_USAGE": 72712192,
+      "PARENT_ATOM": "b043eda9dd5e1c357c3576d469199957",
+      "PARENT_PROCESS_ID": 10396,
+      "PROCESS_ID": 2292,
+      "THIS_ATOM": "43c5848ce3e39ab8f8e53e88691b2891",
+      "THREADS": 27,
+      "TIMESTAMP": 1763387536602,
+      "USER_NAME": "UMAIR\\MMT"
+    },
+    "PARENT_PROCESS_ID": 2292,
+    "PROCESS_ID": 13380,
+    "THREADS": 4,
+    "USER_NAME": "UMAIR\\MMT"
+  },
+  "routing": {
+    "arch": 2,
+    "did": "",
+    "event_id": "b12384ca-5eb2-4269-a354-7ccacfce3df6",
+    "event_time": 1763392187483,
+    "event_type": "NEW_PROCESS",
+    "ext_ip": "154.208.34.13",
+    "hostname": "umair",
+    "iid": "6b71b254-2ba6-4f33-abe6-876b6a27e134",
+    "int_ip": "192.168.1.8",
+    "latency": 637,
+    "moduleid": 2,
+    "oid": "aeba6a34-a0e8-437e-86d9-a63fef1882f1",
+    "parent": "43c5848ce3e39ab8f8e53e88691b2891",
+    "plat": 268435456,
+    "sid": "509eb34e-600b-41bb-9c69-bbd22d691364",
+    "tags": [],
+    "this": "41c9235150320d3533a8c7ab691b3abc"
+  },
+  "ts": "2025-11-17 15:09:47"
+}
+
+
+sample Output:
+"root":{
+"author":"03104676590umary@gmail.com"
+"cat":"MyDFIR - HackTool - Lazagne"
+"detect":{
+"event":{
+"BASE_ADDRESS":140701053091840
+"COMMAND_LINE":""C:\Users\MMT\Downloads\LaZagne.exe""
+"FILE_IS_SIGNED":0
+"FILE_PATH":"C:\Users\MMT\Downloads\LaZagne.exe"
+"HASH":"dc06d62ee95062e714f2566c95b8edaabfd387023b1bf98a09078b84007d5268"
+"MEMORY_USAGE":5517312
+"PARENT":{
+"BASE_ADDRESS":140695674355712
+"COMMAND_LINE":""C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" "
+"FILE_IS_SIGNED":1
+"FILE_PATH":"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
+"HASH":"3247bcfd60f6dd25f34cb74b5889ab10ef1b3ec72b4d4b3d95b5b25b534560b8"
+"MEMORY_USAGE":72712192
+"PARENT_ATOM":"b043eda9dd5e1c357c3576d469199957"
+"PARENT_PROCESS_ID":10396
+"PROCESS_ID":2292
+"THIS_ATOM":"43c5848ce3e39ab8f8e53e88691b2891"
+"THREADS":27
+"TIMESTAMP":1763387536602
+"USER_NAME":"UMAIR\MMT"
+}
+"PARENT_PROCESS_ID":2292
+"PROCESS_ID":15208
+"THREADS":4
+"USER_NAME":"UMAIR\MMT"
+}
+"routing":{
+"arch":2
+"did":""
+"event_id":"991f572a-7f2d-4b4f-a379-cc8a6ed58457"
+"event_time":1763392388460
+"event_type":"NEW_PROCESS"
+"ext_ip":"154.208.34.13"
+"hostname":"umair"
+"iid":"6b71b254-2ba6-4f33-abe6-876b6a27e134"
+"int_ip":"192.168.1.8"
+"latency":876
+"moduleid":2
+"oid":"aeba6a34-a0e8-437e-86d9-a63fef1882f1"
+"parent":"43c5848ce3e39ab8f8e53e88691b2891"
+"plat":268435456
+"sid":"509eb34e-600b-41bb-9c69-bbd22d691364"
+"tags":[]
+"this":"3fe42d183ef03e0586686d05691b3b85"
+}
+}
+"detect_id":"aa7e4b02-cf78-4a11-975e-a54b691b3b85"
+"detect_mtd":{
+"author":"MyDFIR"
+"description":"TEST - Detects Lazagne Usage"
+"falsepositives":[
+"ToTheMoon"
+]
+"level":"high"
+"tags":[
+"attack.credential_access"
+]
+}
+"gen_time":1763392389336
+"link":"https://app.limacharlie.io/orgs/aeba6a34-a0e8-437e-86d9-a63fef1882f1/…"
+"namespace":"general"
+"routing":{
+"arch":2
+"did":""
+"event_id":"991f572a-7f2d-4b4f-a379-cc8a6ed58457"
+"event_time":1763392388460
+"event_type":"NEW_PROCESS"
+"ext_ip":"154.208.34.13"
+"hostname":"umair"
+"iid":"6b71b254-2ba6-4f33-abe6-876b6a27e134"
+"int_ip":"192.168.1.8"
+"latency":876
+"moduleid":2
+"oid":"aeba6a34-a0e8-437e-86d9-a63fef1882f1"
+"parent":"43c5848ce3e39ab8f8e53e88691b2891"
+"plat":268435456
+"sid":"509eb34e-600b-41bb-9c69-bbd22d691364"
+"tags":[]
+"this":"3fe42d183ef03e0586686d05691b3b85"
+}
+"source":"aeba6a34-a0e8-437e-86d9-a63fef1882f1.6b71b254-2ba6-4f33-abe6-876b6a27…"
+"source_rule":"general.lazagn SOAR-DETECTION"
+}
+
+
+Variables used in tines.com:
+Title: <<retrieve_detection.body.cat>>
+Time: <<retrieve_detection.body.detect.routing.event_time>>
+Computer: <<retrieve_detection.body.detect.routing.hostname>>
+Source IP: <<retrieve_detection.body.detect.routing.int_ip>>
+Username: <<retrieve_detection.body.detect.event.USER_NAME>>
+File Path: <<retrieve_detection.body.detect.event.FILE_PATH>>
+Command Line: <<retrieve_detection.body.detect.event.COMMAND_LINE>>
+Sensor ID: <<retrieve_detection.body.detect.routing.sid>>
+Detection: <<retrieve_detection.body.link>>
